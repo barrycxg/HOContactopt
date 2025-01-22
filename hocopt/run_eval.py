@@ -124,8 +124,8 @@ def vis_sample(gt_ho, in_ho, out_ho, idx, mje_in=None, mje_out=None, vis_3d=Fals
     hand_out.translate((0.0, 0.4, 0.0))
     obj_out.translate((0.0, 0.4, 0.0))
 
-    # geom_list = [hand_gt, obj_gt, hand_out, obj_out, hand_in, obj_in]
-    geom_list = [hand_out, obj_out]
+    geom_list = [hand_gt, obj_gt, hand_out, obj_out, hand_in, obj_in]
+    # geom_list = [hand_out, obj_out]
     # hand_contact_gt = util.val_to_class(torch.Tensor(in_ho.hand_contact).cuda()) 
     # obj_contact_gt = util.val_to_class(torch.Tensor(in_ho.obj_contact).cuda()) 
     # obj_gt_freq, hand_gt_freq = util.get_gt_distribution(hand_contact_gt.unsqueeze(0), obj_contact_gt.unsqueeze(0))
@@ -203,27 +203,20 @@ def run_eval(args):
         out_all = [item[1] for item in all_data]
     else:
         all_data = []   # Do non-parallel
-        # vis_idx = [13,27,30,33,35,52,63,84,85,182,244,294,332,360]
-        # vis_idx = [151,222,269,688]
-        # vis_idx = [4,64,355]
-        vis_idx = [107]
         for idx, s in enumerate(tqdm(runs)):
-            # if idx <80:
-            #     continue
-            if idx in vis_idx:
-                all_data.append(process_sample(s, idx))
+            all_data.append(process_sample(s, idx))
 
             # if (all_data[-1][0]['unalign_hand_joints'] - all_data[-1][1]['unalign_hand_joints'] >= 0.000) and all_data[-1][1]['unalign_hand_joints'] <= 0.01:
             # if all_data[-1][1]['unalign_hand_joints'] <= 0.003:
             # if idx >= 80 and idx<=98 :
-                if args.vis:
-                    print('In vs GT\n', pprint.pformat(all_data[-1][0]))
-                    print('Out vs GT\n', pprint.pformat(all_data[-1][1]))
-                    if args.split == 'im_pred_trans':
-                        vis_sample(s['gt_ho'], s['in_ho'], s['out_ho'], idx, mje_in=all_data[-1][0]['objalign_hand_joints'], mje_out=all_data[-1][1]['objalign_hand_joints'], vis_3d=False, save_video=True)
-                    else:
-                        print(idx)
-                        vis_sample(s['gt_ho'], s['in_ho'], s['out_ho'], idx, mje_in=all_data[-1][0]['unalign_hand_joints'], mje_out=all_data[-1][1]['unalign_hand_joints'], vis_3d=False, save_video=False)
+            if args.vis:
+                print('In vs GT\n', pprint.pformat(all_data[-1][0]))
+                print('Out vs GT\n', pprint.pformat(all_data[-1][1]))
+                if args.split == 'im_pred_trans':
+                    vis_sample(s['gt_ho'], s['in_ho'], s['out_ho'], idx, mje_in=all_data[-1][0]['objalign_hand_joints'], mje_out=all_data[-1][1]['objalign_hand_joints'], vis_3d=False, save_video=True)
+                else:
+                    print(idx)
+                    vis_sample(s['gt_ho'], s['in_ho'], s['out_ho'], idx, mje_in=all_data[-1][0]['unalign_hand_joints'], mje_out=all_data[-1][1]['unalign_hand_joints'], vis_3d=False, save_video=False)
                     # vis_3d: visualization with 3D rotation
             
 

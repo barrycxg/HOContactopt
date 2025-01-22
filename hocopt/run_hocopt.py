@@ -166,8 +166,8 @@ def run_contactopt(args):
             break
 
     #------- save optimized result -------------# 
-    out_file = 'data/optimized_{}.pkl'.format(args.split)
-    # out_file = 'data/optimized_im_dexycb.pkl'
+    # out_file = 'data/optimized_{}.pkl'.format(args.split)
+    out_file = 'data/optimized_test.pkl'
     print('Saving to {}. Len {}'.format(out_file, len(all_data)))
     if args.compressed_storage:
         with open(out_file, 'wb') as output_file:
@@ -235,6 +235,7 @@ if __name__ == '__main__':
                     'w_obj_rot': 0,
                     'vis_method': 1}
     elif args.split == 'im_dexycb':    # Settings defaults for image-based pose estimates(DexYCB/HO3D)
+        # need to adjust function "run_mano" in hand_object.py --> mano_model = ManoLayer(mano_root='mano/models', joint_rot_mode="axisang", use_pca=True, ncomps=45, center_idx=None, flat_hand_mean=False)
         defaults = {'lr': 0.001,
                     'n_iter': 100,
                     'w_cont_hand': 3.5, # 2.0
@@ -256,6 +257,7 @@ if __name__ == '__main__':
                     'w_obj_rot': 0,
                     'vis_method': 5}
     elif args.split == 'im_ho3d':    # Settings defaults for image-based pose estimates(DexYCB/HO3D)
+        # need to adjust function "run_mano" in hand_object.py --> mano_model = ManoLayer(mano_root='mano/models', joint_rot_mode="axisang", use_pca=False, ncomps=45, center_idx=None, flat_hand_mean=True)
         defaults = {'lr': 0.001,
                     'n_iter': 300,
                     'w_cont_hand': 1.0, # 1.0
@@ -269,7 +271,7 @@ if __name__ == '__main__':
                     'cont_method': 6,
                     'caps_top': 0.0005,
                     'caps_bot': -0.001,
-                    'w_pen_cost': 900,
+                    'w_pen_cost': 900, # 900
                     'pen_it': 0,
                     'rand_re': 1,
                     'rand_re_trans': 0.0,

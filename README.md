@@ -62,8 +62,8 @@ mano/models/MANO_RIGHT.pkl
 
 ## Running On Datasets
 
-To run HOCOpt on datasets, download the [preprocessed datasets](https://drive.google.com/drive/folders/1BBV9nYp6qIpdiOTjCRBayYuITAXu152I?usp=drive_link)
-and [pretrained checkpoints](https://drive.google.com/drive/folders/1zmtFHkh75rKiJMKP8lv-h9QMvQllpDoX?usp=drive_link)
+To run HOCOpt on datasets, download the preprocessed datasets
+and pretrained checkpoints at the [website](https://huggingface.co/barrycxg/hocopt_datasets).
 
 ```bash
 python hocopt/run_hocopt.py --split=SELECT_CLASS --checkpoint=PATH-TO-MODEL
